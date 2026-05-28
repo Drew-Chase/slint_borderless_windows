@@ -25,7 +25,7 @@ In your `Cargo.toml`:
 
 ```toml
 [dependencies]
-slint_borderless_windows = { path = "path/to/slint_borderless_windows" }
+slint_borderless_windows = { git = "https://github.com/Drew-Chase/slint_borderless_windows.git" }
 slint = { version = "1.16.1", features = ["backend-winit"] }
 ```
 
