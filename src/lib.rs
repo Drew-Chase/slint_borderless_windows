@@ -106,6 +106,21 @@ impl<T: slint::ComponentHandle + 'static> WindowFrame<T> {
     pub fn minimize(&self) {
         self.with_window(|w| w.set_minimized(true));
     }
+    /// Closes the application by terminating the event loop.
+    ///
+    /// This function calls `slint::quit_event_loop()` to stop the active event loop.
+    /// It should be used to gracefully shut down the application when it is no longer needed.
+    ///
+    /// # Panics
+    /// If the event loop fails to quit, this function will panic with the message
+    /// `"Failed to quit event loop"`.
+    ///
+    /// # Example
+    /// ```rust
+    /// my_application.close();
+    /// ```
+    ///
+    /// Ensure that this method is called when appropriate to avoid unnecessary panics.
     pub fn close(&self) {
         slint::quit_event_loop().expect("Failed to quit event loop");
     }
