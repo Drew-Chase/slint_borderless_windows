@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 slint::include_modules!();
 use i_slint_backend_winit::WinitWindowAccessor;
 use slint::Window;
@@ -42,18 +44,96 @@ impl<T: slint::ComponentHandle + 'static> WindowFrame<T> {
         self.weak.upgrade().map(|c| f(c.window()))
     }
 
+    /// Sets the maximized state of the window.
+    ///
+    /// This function toggles the maximized state of the window based on the
+    /// `is_maximized` parameter. If `is_maximized` is `true`, the window will
+    /// be maximized; if `false`, the window will be restored to its normal state.
+    ///
+    /// # Parameters
+    /// - `is_maximized`: A boolean indicating the desired maximized state of the window.
+    ///   - `true`: Maximizes the window.
+    ///   - `false`: Restores the window to its normal size.
+    ///
+    /// # Example
+    /// ```
+    /// some_object.maximize(true); // Maximizes the window
+    /// some_object.maximize(false); // Restores the window to its original size
+    /// ```
+    ///
+    /// # Implementation Details
+    /// Internally, this function uses the `with_window` method to obtain the
+    /// current window instance and calls `set_maximized` on it with the value
+    /// of `is_maximized`.
     pub fn maximize(&self, is_maximized: bool) {
         self.with_window(|w| w.set_maximized(is_maximized));
     }
+    /// Toggles the maximized state of the window.
+    ///
+    /// This function inverts the current maximized state of the window.
+    /// If the window is currently maximized, it will be restored to its normal size.
+    /// Conversely, if the window is currently in its normal state, it will be maximized.
+    ///
+    /// # Example
+    /// ```rust
+    /// // Assuming `self` is an instance with the `toggle_maximized` method
+    /// self.toggle_maximized();
+    /// ```
+    ///
+    /// # Notes
+    /// - This method relies on the `with_window` method to access the underlying window object.
+    /// - The `set_maximized` method is used to update the maximized state, and the
+    ///   current state is determined by the `is_maximized` method.
+    ///
+    /// # Panics
+    /// This method may panic if `with_window` fails to provide access to a valid window object.
     pub fn toggle_maximized(&self) {
         self.with_window(|w| w.set_maximized(!w.is_maximized()));
     }
+    /// Minimizes the window associated with the current instance.
+    ///
+    /// This method utilizes the `with_window` function to access the underlying window
+    /// and sets its `minimized` state to `true`, effectively minimizing the window on the screen.
+    ///
+    /// # Example
+    /// ```rust
+    /// my_window_instance.minimize();
+    /// ```
+    ///
+    /// # Note
+    /// Ensure that the instance has a valid window context before calling this method
+    /// to avoid unexpected behavior.
     pub fn minimize(&self) {
         self.with_window(|w| w.set_minimized(true));
     }
+    ///
     pub fn close(&self) {
         slint::quit_event_loop().expect("Failed to quit event loop");
     }
+    /// Initiates a drag operation for the current window.
+    ///
+    /// This method triggers the drag functionality of the window,
+    /// allowing the user to click and drag the window across the screen.
+    ///
+    /// # Implementation Details
+    /// - Internally, the method uses the `winit` crate to access the window instance
+    ///   and call its `drag_window` method.
+    /// - If the drag operation fails (e.g., if the platform does not support it),
+    ///   the error is ignored.
+    ///
+    /// # Usage
+    /// ```rust
+    /// // Assuming `self` is an instance with access to this method:
+    /// self.drag();
+    /// ```
+    ///
+    /// # Caveats
+    /// - Platform-specific behavior: Dragging may not be available or behave
+    ///   differently on certain operating systems.
+    /// - Silent failure: If the drag operation fails, it will not propagate an error.
+    ///
+    /// # Dependencies
+    /// Requires the `winit` crate for window handling.
     pub fn drag(&self) {
         self.with_winit_window(|window| {
             let _ = window.drag_window();
@@ -185,6 +265,33 @@ impl<T: slint::ComponentHandle + 'static> WindowFrame<T> {
 }
 
 pub trait TitlebarSetup<T: slint::ComponentHandle> {
+    /// Sets up a borderless window frame for rendering.
+    ///
+    /// This function configures the window to operate without a standard border,
+    /// which is particularly useful for custom drawing or specialized window designs.
+    ///
+    /// # Returns
+    ///
+    /// * `Ok(WindowFrame<T>)` - If the borderless window setup is successful, an instance
+    ///   of `WindowFrame` is returned.
+    /// * `Err(slint::PlatformError)` - If an error occurs during the setup process, a
+    ///   platform-specific `PlatformError` is returned.
+    ///
+    /// # Errors
+    ///
+    /// This method will return an error if the platform does not support borderless
+    /// window frames or if there is a failure in the window setup process.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// let window_frame = my_window.setup_borderless()?;
+    /// // Use `window_frame` for further customization or operations.
+    /// ```
+    ///
+    /// # Note
+    /// Ensure that the environment in which the application is running supports borderless
+    /// window configurations. This function might rely on platform-specific APIs or extensions.
     fn setup_borderless(&self) -> Result<WindowFrame<T>, slint::PlatformError>;
 }
 
