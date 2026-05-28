@@ -1,0 +1,30 @@
+[workspace]
+default-members = []
+members = ["examples/basic_example"]
+
+[package]
+name = "slint_borderless_windows"
+version = "0.1.0"
+edition = "2024"
+links = "slint_borderless_windows"
+
+[build-dependencies]
+slint-build = { version = "1.16.1", features = ["experimental-module-builds"] }
+
+[dependencies]
+slint = { version = "1.16.1", features = ["backend-winit"] }
+tracing = "0.1.44"
+windows = "0.62.2"
+i-slint-backend-winit = { version = "1.16.1" }
+winit = { version = "0.30.13" }
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows = { version = "0.62.2", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Dwm",
+    "Win32_UI_Controls",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Shell",
+    "Win32_System_ProcessStatus",
+    "Win32_System_Threading",
+] }
