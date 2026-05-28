@@ -1,0 +1,12 @@
+[package]
+name = "basic_example"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+slint_borderless_windows = {path="../../."}
+slint = { version = "1.16.1", features = ["backend-winit"] }
+
+
+[build-dependencies]
+slint-build = "1.16.1"

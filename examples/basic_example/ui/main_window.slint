@@ -1,0 +1,31 @@
+import { VerticalBox } from "std-widgets.slint";
+import { Titlebar, WindowControls } from "../../../titlebar.slint";
+
+export { WindowControls }
+
+export component MainWindow inherits Window {
+    title: "Slint Borderless Window Example";
+    no-frame: true;
+
+    VerticalLayout {
+        padding: 0px;
+        spacing: 0px;
+
+        Titlebar {
+            title: "Slint Borderless Window Example";
+        }
+
+        // Content area
+        Rectangle {
+            vertical-stretch: 1;
+            background: #1e1e1e;
+
+            Text {
+                text: "Hello, World!";
+                color: #ffffff;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
+    }
+}
