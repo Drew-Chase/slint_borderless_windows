@@ -106,7 +106,6 @@ impl<T: slint::ComponentHandle + 'static> WindowFrame<T> {
     pub fn minimize(&self) {
         self.with_window(|w| w.set_minimized(true));
     }
-    ///
     pub fn close(&self) {
         slint::quit_event_loop().expect("Failed to quit event loop");
     }

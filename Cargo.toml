@@ -7,6 +7,13 @@ name = "slint_borderless_windows"
 version = "0.1.0"
 edition = "2024"
 links = "slint_borderless_windows"
+authors = ["Drew Chase"]
+description = "Borderless window with a custom titlebar for Slint applications on Windows, with native DWM shadows, rounded corners, and resize hit-testing."
+repository = "https://github.com/Drew-Chase/slint_borderless_windows"
+license = "MIT"
+keywords = ["slint", "windows", "borderless", "titlebar", "dwm"]
+categories = ["gui", "os::windows-apis"]
+readme = "README.md"
 
 [build-dependencies]
 slint-build = { version = "1.16.1", features = ["experimental-module-builds"] }
