@@ -4163,11 +4163,10 @@ dependencies = [
 
 [[package]]
 name = "slint_borderless_windows"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "i-slint-backend-winit",
  "slint",
- "slint-build",
  "tracing",
  "windows 0.62.2",
  "winit",

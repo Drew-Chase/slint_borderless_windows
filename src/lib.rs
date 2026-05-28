@@ -1,6 +1,5 @@
 #![doc = include_str!("../README.md")]
 
-slint::include_modules!();
 use i_slint_backend_winit::WinitWindowAccessor;
 use slint::Window;
 use std::ffi::c_void;
