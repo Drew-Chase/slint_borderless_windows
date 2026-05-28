@@ -1,5 +1,4 @@
 [workspace]
-default-members = []
 members = ["examples/basic_example"]
 
 [package]
